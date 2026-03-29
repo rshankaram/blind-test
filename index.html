@@ -192,6 +192,13 @@ function getPhaseAnswerIds(phaseIdx) {
   return ids;
 }
 
+function syncAnswersFromDOM() {
+  getPhaseAnswerIds(S.phase).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) S.answers[id] = el.value;
+  });
+}
+
 function validatePhase(phaseIdx) {
   return getPhaseAnswerIds(phaseIdx).filter(id => !S.answers[id] || S.answers[id].trim().length < 3);
 }
@@ -421,14 +428,14 @@ function scoreLabel(s) {
 async function loadPathwayPrefill() {
   S.pathwayLoading = true; render();
   try {
-    const text = await callAPI(pathwayPrefillPrompt(), 'phase');
+    const text = await callAPI(pathwayPrefillPrompt(), 'prefill');
     const prefill = parsePrefill(text);
     S.pathwayPrefill = prefill;
-    if (!S.answers.c1) S.answers.c1 = prefill.c1;
-    if (!S.answers.c2) S.answers.c2 = prefill.c2;
-    if (!S.answers.c3) S.answers.c3 = prefill.c3;
+    if (prefill.c1 && !S.answers.c1) S.answers.c1 = prefill.c1;
+    if (prefill.c2 && !S.answers.c2) S.answers.c2 = prefill.c2;
+    if (prefill.c3 && !S.answers.c3) S.answers.c3 = prefill.c3;
   } catch(e) {
-    S.error = 'Could not load pathway suggestions. You can fill in the fields manually.';
+    S.pathwayPrefill = {};
   }
   S.pathwayLoading = false; render();
 }
@@ -447,6 +454,7 @@ async function getFullDiagnosis() {
 
 function goPhase(i) {
   if (i > S.phase) {
+    syncAnswersFromDOM();
     const missing = validatePhase(S.phase);
     if (missing.length > 0) {
       S.error = `Please answer all questions before continuing. ${missing.length} still need${missing.length === 1 ? 's' : ''} a response.`;
@@ -463,6 +471,7 @@ function goPhase(i) {
 }
 
 function handleFinalDiagnosis() {
+  syncAnswersFromDOM();
   const missing = validatePhase(S.phase);
   if (missing.length > 0) {
     S.error = 'Please complete all three fields before getting your diagnosis.';
