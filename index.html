@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Mirror Test — Growth StratEx</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1a2e44; --navy-deep: #0f1d2c; --navy-mid: #243650;
+  --gold: #c9a84c; --gold-light: #e2c97e; --gold-pale: #f5edda;
+  --cream: #faf8f4; --text: #1a2e44; --text-mid: #4a5e72; --text-light: #8a9db0;
+  --border: #ddd8ce; --border-light: #eee9e0; --white: #ffffff;
+}
+
+body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; font-weight: 300; }
+
+/* ── Header ── */
+.header {
+  background: var(--navy-deep);
+  padding: 22px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(201,168,76,0.25);
+}
+.brand-name { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 500; color: var(--gold-light); letter-spacing: 0.03em; }
+.brand-tag { font-size: 10px; color: rgba(201,168,76,0.45); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 3px; }
+.header-right { text-align: right; }
+.tool-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: rgba(255,255,255,0.75); font-style: italic; }
+.tool-sub { font-size: 10px; color: rgba(255,255,255,0.28); letter-spacing: 0.09em; text-transform: uppercase; margin-top: 3px; }
+
+/* ── Progress ── */
+.progress { background: var(--navy); padding: 0 48px; display: flex; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.p-step { padding: 13px 20px 11px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.25); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.p-step:hover { color: rgba(255,255,255,0.5); }
+.p-step.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+.p-step.done { color: rgba(201,168,76,0.4); border-bottom-color: rgba(201,168,76,0.2); }
+
+/* ── Layout ── */
+.wrap { max-width: 760px; margin: 0 auto; padding: 48px 48px 100px; }
+
+/* ── Welcome screen ── */
+.welcome { text-align: center; padding: 60px 20px 40px; }
+.welcome-eyebrow { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.welcome-title { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 500; color: var(--navy-deep); line-height: 1.15; margin-bottom: 20px; }
+.welcome-desc { font-size: 15px; color: var(--text-mid); line-height: 1.85; max-width: 520px; margin: 0 auto 36px; }
+.welcome-meta { display: flex; justify-content: center; gap: 36px; margin-bottom: 44px; flex-wrap: wrap; }
+.meta-item { text-align: center; }
+.meta-val { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--navy); font-weight: 500; }
+.meta-lbl { font-size: 10px; color: var(--text-light); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px; }
+.welcome-divider { width: 48px; height: 1px; background: var(--gold); margin: 0 auto 36px; }
+.welcome-note { font-size: 13px; color: var(--text-light); line-height: 1.7; max-width: 440px; margin: 0 auto 40px; font-style: italic; }
+
+/* ── Phase header ── */
+.phase-head { margin-bottom: 36px; padding-bottom: 28px; border-bottom: 1px solid var(--border-light); }
+.phase-eyebrow { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.phase-title { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 500; color: var(--navy-deep); line-height: 1.2; margin-bottom: 6px; }
+.phase-dur { font-size: 11px; color: var(--text-light); letter-spacing: 0.07em; margin-bottom: 14px; }
+.phase-desc { font-size: 14px; color: var(--text-mid); line-height: 1.8; max-width: 580px; }
+
+/* ── Dimension label ── */
+.dim-head { font-size: 10px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--gold); margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--gold-pale); }
+
+/* ── Questions ── */
+.q-block { margin-bottom: 28px; }
+.q-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--navy-deep); margin-bottom: 7px; line-height: 1.4; }
+.q-guide { font-size: 12px; color: var(--text-light); font-style: italic; margin-bottom: 9px; padding-left: 13px; border-left: 2px solid var(--border); line-height: 1.65; }
+textarea {
+  width: 100%; min-height: 72px; padding: 12px 14px;
+  border: 1px solid var(--border); border-radius: 4px;
+  background: var(--white); font-family: 'Jost', sans-serif;
+  font-size: 14px; font-weight: 300; color: var(--text);
+  resize: vertical; line-height: 1.65; transition: border-color 0.15s;
+}
+textarea:focus { outline: none; border-color: var(--gold); }
+textarea::placeholder { color: #c0b8ae; }
+
+/* ── Canvas (phase 3) ── */
+.canvas-block { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 10px; }
+.canvas-top { background: var(--navy-deep); padding: 13px 18px; }
+.canvas-top-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--gold-light); font-weight: 500; }
+.canvas-top-hint { font-size: 11px; color: rgba(201,168,76,0.42); font-style: italic; margin-top: 3px; }
+.canvas-body textarea { border: none; border-radius: 0; min-height: 76px; padding: 13px 16px; }
+.canvas-body textarea:focus { outline: none; border: none; box-shadow: none; }
+
+/* ── AI feedback ── */
+.feedback-box { margin-top: 28px; border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; overflow: hidden; }
+.feedback-top { background: var(--navy); padding: 11px 18px; display: flex; align-items: center; gap: 10px; }
+.feedback-label { font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--gold); }
+.feedback-body { background: var(--white); padding: 20px 22px; font-size: 14px; color: var(--text-mid); line-height: 1.85; }
+.feedback-body p { margin-bottom: 12px; }
+.feedback-body p:last-child { margin-bottom: 0; }
+.feedback-body.loading { color: var(--text-light); font-style: italic; }
+
+/* ── Strength card ── */
+.strength-card { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-top: 32px; }
+.strength-top { background: var(--navy-deep); padding: 18px 22px; }
+.strength-top-title { font-family: 'Cormorant Garamond', serif; font-size: 21px; color: var(--gold-light); font-weight: 500; }
+.strength-top-sub { font-size: 11px; color: rgba(201,168,76,0.38); margin-top: 4px; letter-spacing: 0.05em; }
+.strength-body { background: var(--white); padding: 22px; }
+.strength-row { display: grid; grid-template-columns: 150px 1fr 90px; gap: 14px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border-light); }
+.strength-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+.strength-dim { font-size: 12px; color: var(--text-mid); font-weight: 400; }
+.bar-bg { height: 5px; background: var(--border-light); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; background: var(--gold); transition: width 0.7s ease; }
+.bar-label { font-size: 11px; font-weight: 500; text-align: right; }
+.bar-label.strong { color: var(--green, #1a6b4a); }
+.bar-label.mid { color: #b45309; }
+.bar-label.weak { color: #a32d2d; }
+.dim-insight { margin-top: 6px; font-size: 12px; color: var(--text-mid); line-height: 1.65; padding: 8px 12px; background: var(--cream); border-radius: 3px; border-left: 2px solid var(--gold-pale); }
+
+/* ── Diagnosis sections ── */
+.diag-section { margin-top: 14px; border: 1px solid rgba(201,168,76,0.28); border-radius: 6px; overflow: hidden; }
+.diag-top { background: var(--navy); padding: 11px 18px; }
+.diag-label { font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--gold); }
+.diag-body { background: var(--white); padding: 20px 22px; font-size: 14px; color: var(--text-mid); line-height: 1.85; }
+.diag-body p { margin-bottom: 11px; }
+.diag-body p:last-child { margin-bottom: 0; }
+
+.positioning-statement { background: var(--white); padding: 20px 22px; font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--navy-deep); line-height: 1.65; font-style: italic; }
+
+.nextstep-top { background: var(--gold); padding: 11px 18px; }
+.nextstep-label { font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--navy-deep); font-weight: 500; }
+.nextstep-body { background: var(--white); padding: 20px 22px; font-size: 14px; color: var(--text); line-height: 1.85; font-weight: 400; }
+
+/* ── Buttons ── */
+.btn { font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 26px; border: 1px solid; border-radius: 2px; cursor: pointer; transition: all 0.15s; }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-outline { background: transparent; border-color: var(--border); color: var(--text-light); }
+.btn-outline:hover:not(:disabled) { border-color: var(--text-mid); color: var(--text-mid); }
+.btn-navy { background: var(--navy-deep); border-color: var(--navy-deep); color: var(--gold-light); }
+.btn-navy:hover:not(:disabled) { background: var(--navy-mid); }
+.btn-gold { background: var(--gold); border-color: var(--gold); color: var(--navy-deep); font-weight: 500; }
+.btn-gold:hover:not(:disabled) { background: var(--gold-light); border-color: var(--gold-light); }
+
+.nav-row { display: flex; align-items: center; justify-content: space-between; margin-top: 48px; padding-top: 26px; border-top: 1px solid var(--border-light); }
+.nav-right { display: flex; gap: 10px; align-items: center; }
+
+/* ── Error ── */
+.error-msg { margin-top: 16px; padding: 12px 16px; background: #fff5f5; border: 1px solid #f5c0c0; border-radius: 4px; font-size: 13px; color: #a32d2d; }
+
+/* ── Footer ── */
+.footer { text-align: center; padding: 22px 48px; border-top: 1px solid var(--border-light); font-size: 11px; color: var(--text-light); letter-spacing: 0.04em; }
+.footer strong { color: var(--gold); font-weight: 400; }
+
+@media (max-width: 600px) {
+  .header { padding: 18px 20px; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .header-right { text-align: left; }
+  .progress { padding: 0 10px; overflow-x: auto; }
+  .wrap { padding: 28px 20px 70px; }
+  .phase-title, .welcome-title { font-size: 26px; }
+  .strength-row { grid-template-columns: 100px 1fr 70px; gap: 10px; }
+  .welcome { padding: 40px 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="brand-name">Growth StratEx</div>
+    <div class="brand-tag">Strategy. Realised.</div>
+  </div>
+  <div class="header-right">
+    <div class="tool-name">The Mirror Test</div>
+    <div class="tool-sub">AI Positioning Diagnostic</div>
+  </div>
+</div>
+
+<div class="progress" id="progress"></div>
+<div class="wrap" id="content"></div>
+
+<div class="footer">
+  A tool by <strong>Shankar</strong> &nbsp;·&nbsp; shankar@growthstratex.com &nbsp;·&nbsp; Growth StratEx
+</div>
+
+<script>
+const S = {
+  screen: 'welcome',
+  phase: 0,
+  answers: {},
+  phaseFeedback: { 0: null, 1: null },
+  diagnosis: null,
+  loading: false,
+  error: null
+};
+
+const PHASES = [
+  {
+    num: 1, title: 'The Reaction', duration: '5 minutes',
+    desc: 'You just saw your own homepage — without the logo. What you felt in that moment is the starting point. Answer honestly. The discomfort, if there is any, is the most useful data you have.',
+    questions: [
+      { id: 'p1q1', q: 'What was your first reaction when you saw it?', guide: 'Be honest. Surprise, defensiveness, or discomfort are all valid starting points.' },
+      { id: 'p1q2', q: 'If this were a competitor\'s website, would you call them? Why or why not?', guide: 'Answer as a buyer — not as the person who built the business.' },
+      { id: 'p1q3', q: 'What does this homepage say the company is best at?', guide: 'Try to answer as someone seeing it for the first time, with no prior knowledge of the firm.' }
+    ]
+  },
+  {
+    num: 2, title: 'The Diagnosis', duration: '15–20 minutes',
+    desc: 'Five questions across three dimensions. Take your time with each. The answers you find most difficult to write are usually the most important ones.',
+    dims: [
+      {
+        label: 'Who is this for',
+        questions: [
+          { id: 'p2q1', q: 'Who is the ideal client you most want to work with?', guide: 'Be specific — industry, company size, geography, growth stage, decision-maker profile.' },
+          { id: 'p2q2', q: 'Think of the last three clients you were proudest to work with. What did they have in common?', guide: 'Patterns across your best work — same sector, same problem, same profile — are positioning data. This is often more honest than the aspirational answer above.' }
+        ]
+      },
+      {
+        label: 'What problem you solve best',
+        questions: [
+          { id: 'p2q3', q: 'What is the one business problem you have solved more times than anything else?', guide: 'Push past the technical answer. Not "we implement SAP" — but "we fix broken ERP rollouts in mid-size manufacturers before they write off the investment." What is the real business outcome?' },
+          { id: 'p2q4', q: 'What do your best clients say after working with you — in their own words?', guide: 'If you have a reference call or a testimonial you can recall, use that language. Client words are almost always stronger positioning than founder words.' }
+        ]
+      },
+      {
+        label: 'Why you over others',
+        questions: [
+          { id: 'p2q5', q: 'A buyer has shortlisted you and two other firms with similar profiles. What makes them choose you?', guide: 'Push past relationships and price — both are table stakes. What do you have that is genuinely hard to copy? A reference? A sector depth? A specific methodology? A track record in a particular problem type?' }
+        ]
+      }
+    ]
+  },
+  {
+    num: 3, title: 'The Pathway', duration: '10–15 minutes',
+    desc: 'Three fields. Based on everything you have uncovered above. These are not the final answer — they are the honest starting point for your positioning work. Write what is true, not what sounds good.',
+    canvas: [
+      { id: 'c1', label: 'Clearest strength', hint: 'The one thing you do better than most — grounded in real evidence' },
+      { id: 'c2', label: 'Most credible audience', hint: 'The client type where you have the most proof, the strongest references, the deepest track record' },
+      { id: 'c3', label: 'One claim you could own', hint: 'A specific, honest statement that no competitor is making today — and that a buyer would find credible' }
+    ]
+  }
+];
+
+function a(id) { return S.answers[id] || ''; }
+
+function phasePrompt(phaseIdx) {
+  if (phaseIdx === 0) {
+    return `You are a straight-talking but constructive positioning consultant working with an IT services founder in India. They have just completed the first phase of a positioning diagnostic called the Mirror Test — they looked at their own homepage with the logo removed and answered three questions about their reaction.
+
+Their answers:
+
+Q1 — First reaction to seeing the homepage without the logo:
+"${a('p1q1')}"
+
+Q2 — Whether they would call this company if it were a competitor, and why:
+"${a('p1q2')}"
+
+Q3 — What the homepage says the company is best at:
+"${a('p1q3')}"
+
+Write a brief, constructive observation — 3 to 4 sentences only. Your job here is not to advise yet — it is to reflect back what the reaction reveals about their current positioning clarity. Name one specific thing you observe. Be direct and warm. If there is genuine clarity, say so. If there is a gap, name it plainly without being harsh. Do not use bullet points. Do not give recommendations yet — this is a reflection, not a prescription.`;
+  }
+
+  if (phaseIdx === 1) {
+    return `You are a straight-talking but constructive positioning consultant working with an IT services founder in India. They have just completed the diagnostic phase of a positioning exercise called the Mirror Test.
+
+Their answers:
+
+Ideal client they want to work with:
+"${a('p2q1')}"
+
+Their best clients and what they had in common:
+"${a('p2q2')}"
+
+The core business problem they solve best:
+"${a('p2q3')}"
+
+What clients say after working with them:
+"${a('p2q4')}"
+
+Why a buyer would choose them over two similar competitors:
+"${a('p2q5')}"
+
+Write a mid-point reflection — 4 to 5 sentences. Identify the strongest signal in their answers — something specific and real they said that is worth building on. Then name the single biggest positioning gap you see. Be direct but constructive. Reference what they actually wrote — no generic advice. Do not use bullet points. Do not give the final recommendations yet — this is a mid-point read, not the full diagnosis.`;
+  }
+}
+
+function finalPrompt() {
+  return `You are a senior positioning consultant with deep experience in Indian IT services companies — typically founder-led firms between ₹15 crore and ₹400 crore in revenue. You have just completed a full positioning diagnostic called the Mirror Test with an IT services founder. Here are all their answers across three phases:
+
+── PHASE 1: THE REACTION ──
+First reaction to homepage (logo removed): "${a('p1q1')}"
+Would they call this company if it were a competitor: "${a('p1q2')}"
+What the homepage says they are best at: "${a('p1q3')}"
+
+── PHASE 2: THE DIAGNOSIS ──
+Ideal client they want to work with: "${a('p2q1')}"
+Best clients and what they had in common: "${a('p2q2')}"
+Core business problem they solve best: "${a('p2q3')}"
+What clients say after working with them: "${a('p2q4')}"
+Why a buyer would choose them over similar competitors: "${a('p2q5')}"
+
+── PHASE 3: THE PATHWAY ──
+Clearest strength (their words): "${a('c1')}"
+Most credible audience (their words): "${a('c2')}"
+One claim they could own (their words): "${a('c3')}"
+
+Now write the full consolidated diagnosis. Use exactly this structure and these section headers:
+
+DIAGNOSIS
+[3 to 4 sentences. Name the core positioning problem or opportunity clearly — based specifically on what they said. Be direct. Be constructive. Reference their actual words where useful.]
+
+WHO YOU SERVE: [score 1-100] | [one sentence on clarity of their ICP — what is working and what needs sharpening]
+WHAT YOU SOLVE: [score 1-100] | [one sentence on clarity of their core problem statement — what is strong or missing]
+WHY YOU: [score 1-100] | [one sentence on their differentiation — what is credible and what is still too generic]
+
+WHAT IS WORKING
+[2 to 3 sentences. Name genuine strengths you see — grounded in specific things they said. Do not be vague. If something they wrote is genuinely strong positioning material, say exactly what it is and why it works.]
+
+YOUR POSITIONING STARTING POINT
+[Write a draft positioning statement for this firm — 2 sentences maximum. Make it specific enough that a competitor could not use it verbatim. Base it entirely on what they shared. This should feel like something they could actually say out loud to a buyer. It is a starting point — honest and directional, not polished copy.]
+
+ONE NEXT STEP
+[One concrete, specific action they can take this week. Not a strategy. Not a project. One thing — a conversation to have, a page to rewrite, a question to ask a client. Make it actionable enough that they know exactly what to do Monday morning.]
+
+Tone throughout: direct, warm, like a trusted advisor who has seen this pattern many times and genuinely wants them to succeed. No bullet points within sections. No generic advice. Everything must connect back to what they actually wrote.`;
+}
+
+async function callAPI(prompt, type) {
+  const res = await fetch('/api/diagnose', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt, type })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || `Error ${res.status}`);
+  }
+  const data = await res.json();
+  return data.text;
+}
+
+function fmt(text) {
+  if (!text) return '';
+  return text.trim().split(/\n\n+/).map(p => `<p>${p.trim().replace(/\n/g, '<br>')}</p>`).join('');
+}
+
+function parseDiagnosis(text) {
+  const get = (pattern) => {
+    const m = text.match(pattern);
+    return m ? m[1].trim() : '';
+  };
+  const diagnosisText = get(/DIAGNOSIS\s*([\s\S]*?)(?=WHO YOU SERVE:|$)/i);
+  const whoText = get(/WHO YOU SERVE:\s*(\d+)\s*\|\s*([\s\S]*?)(?=WHAT YOU SOLVE:|$)/i);
+  const whoScore = parseInt((text.match(/WHO YOU SERVE:\s*(\d+)/i)||[])[1]||'50');
+  const whoInsight = get(/WHO YOU SERVE:\s*\d+\s*\|\s*([\s\S]*?)(?=WHAT YOU SOLVE:|$)/i);
+  const solveScore = parseInt((text.match(/WHAT YOU SOLVE:\s*(\d+)/i)||[])[1]||'50');
+  const solveInsight = get(/WHAT YOU SOLVE:\s*\d+\s*\|\s*([\s\S]*?)(?=WHY YOU:|$)/i);
+  const whyScore = parseInt((text.match(/WHY YOU:\s*(\d+)/i)||[])[1]||'50');
+  const whyInsight = get(/WHY YOU:\s*\d+\s*\|\s*([\s\S]*?)(?=WHAT IS WORKING|$)/i);
+  const working = get(/WHAT IS WORKING\s*([\s\S]*?)(?=YOUR POSITIONING STARTING POINT|$)/i);
+  const positioning = get(/YOUR POSITIONING STARTING POINT\s*([\s\S]*?)(?=ONE NEXT STEP|$)/i);
+  const nextstep = get(/ONE NEXT STEP\s*([\s\S]*?)$/i);
+  return {
+    diagnosis: diagnosisText,
+    dims: [
+      { label: 'Who you serve', score: Math.min(100, Math.max(5, whoScore)), insight: whoInsight },
+      { label: 'What you solve', score: Math.min(100, Math.max(5, solveScore)), insight: solveInsight },
+      { label: 'Why you', score: Math.min(100, Math.max(5, whyScore)), insight: whyInsight }
+    ],
+    working, positioning, nextstep
+  };
+}
+
+function scoreLabel(s) {
+  if (s >= 70) return ['Strong', 'strong'];
+  if (s >= 45) return ['Developing', 'mid'];
+  return ['Needs work', 'weak'];
+}
+
+async function getPhraseFeedback(phaseIdx) {
+  if (!S.apiKey && typeof window !== 'undefined') {
+    S.error = null;
+  }
+  S.loading = true; S.error = null;
+  render();
+  try {
+    const text = await callAPI(phasePrompt(phaseIdx), 'phase');
+    S.phaseFeedback[phaseIdx] = text;
+  } catch(e) {
+    S.error = `Could not get feedback: ${e.message}`;
+  }
+  S.loading = false;
+  render();
+  setTimeout(() => {
+    document.querySelector('.feedback-box')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+async function getFullDiagnosis() {
+  S.loading = true; S.error = null;
+  render();
+  try {
+    const text = await callAPI(finalPrompt(), 'final');
+    S.diagnosis = parseDiagnosis(text);
+  } catch(e) {
+    S.error = `Could not generate diagnosis: ${e.message}`;
+  }
+  S.loading = false;
+  render();
+  setTimeout(() => {
+    document.querySelector('.strength-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+function goPhase(i) {
+  S.phase = i; S.screen = 'phase';
+  render(); window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderProgress() {
+  if (S.screen === 'welcome') { document.getElementById('progress').innerHTML = ''; return; }
+  document.getElementById('progress').innerHTML = PHASES.map((p, i) => {
+    const cls = i === S.phase ? 'p-step active' : i < S.phase ? 'p-step done' : 'p-step';
+    return `<div class="${cls}" onclick="goPhase(${i})">Phase ${p.num} — ${p.title}</div>`;
+  }).join('');
+}
+
+function renderWelcome() {
+  document.getElementById('content').innerHTML = `
+    <div class="welcome">
+      <div class="welcome-eyebrow">A free tool from Growth StratEx</div>
+      <div class="welcome-title">The Mirror Test</div>
+      <div class="welcome-divider"></div>
+      <div class="welcome-desc">Most IT services firms don't have a homepage problem. They have a positioning problem. The homepage is just where it becomes visible.<br><br>This tool helps you diagnose exactly what is weak — and where to start fixing it.</div>
+      <div class="welcome-meta">
+        <div class="meta-item"><div class="meta-val">3</div><div class="meta-lbl">Phases</div></div>
+        <div class="meta-item"><div class="meta-val">30</div><div class="meta-lbl">Minutes</div></div>
+        <div class="meta-item"><div class="meta-val">8</div><div class="meta-lbl">Questions</div></div>
+        <div class="meta-item"><div class="meta-val">AI</div><div class="meta-lbl">Diagnosis</div></div>
+      </div>
+      <div class="welcome-note">Answer honestly. The more specific you are, the more useful the diagnosis. There are no right answers — only honest ones.</div>
+      <button class="btn btn-navy" style="font-size:12px; padding:14px 40px;" onclick="goPhase(0)">Begin the test</button>
+    </div>`;
+}
+
+function renderPhase() {
+  const p = PHASES[S.phase];
+  let html = `<div class="phase-head">
+    <div class="phase-eyebrow">Phase ${p.num} of ${PHASES.length}</div>
+    <div class="phase-title">${p.title}</div>
+    <div class="phase-dur">${p.duration}</div>
+    <div class="phase-desc">${p.desc}</div>
+  </div>`;
+
+  if (p.questions) {
+    p.questions.forEach(q => {
+      html += `<div class="q-block">
+        <div class="q-text">${q.q}</div>
+        <div class="q-guide">${q.guide}</div>
+        <textarea placeholder="Your answer..." onchange="S.answers['${q.id}']=this.value">${a(q.id)}</textarea>
+      </div>`;
+    });
+  }
+
+  if (p.dims) {
+    p.dims.forEach(dim => {
+      html += `<div class="dim-head">${dim.label}</div>`;
+      dim.questions.forEach(q => {
+        html += `<div class="q-block">
+          <div class="q-text">${q.q}</div>
+          <div class="q-guide">${q.guide}</div>
+          <textarea placeholder="Your answer..." onchange="S.answers['${q.id}']=this.value">${a(q.id)}</textarea>
+        </div>`;
+      });
+    });
+  }
+
+  if (p.canvas) {
+    p.canvas.forEach(row => {
+      html += `<div class="canvas-block">
+        <div class="canvas-top">
+          <div class="canvas-top-title">${row.label}</div>
+          <div class="canvas-top-hint">${row.hint}</div>
+        </div>
+        <div class="canvas-body">
+          <textarea placeholder="Write here..." onchange="S.answers['${row.id}']=this.value">${a(row.id)}</textarea>
+        </div>
+      </div>`;
+    });
+  }
+
+  // Phase feedback (phases 0 and 1)
+  if (S.phase < 2) {
+    if (S.phaseFeedback[S.phase]) {
+      html += `<div class="feedback-box">
+        <div class="feedback-top"><div class="feedback-label">Observation — Phase ${S.phase + 1}</div></div>
+        <div class="feedback-body">${fmt(S.phaseFeedback[S.phase])}</div>
+      </div>`;
+    } else if (S.loading) {
+      html += `<div class="feedback-box">
+        <div class="feedback-top"><div class="feedback-label">Observation</div></div>
+        <div class="feedback-body loading">Reading your answers...</div>
+      </div>`;
+    }
+  }
+
+  // Full diagnosis (phase 2)
+  if (S.phase === 2) {
+    if (S.diagnosis) {
+      const d = S.diagnosis;
+      html += `<div class="strength-card">
+        <div class="strength-top">
+          <div class="strength-top-title">Positioning strength</div>
+          <div class="strength-top-sub">Across three dimensions — based on your answers</div>
+        </div>
+        <div class="strength-body">
+          ${d.dims.map(dim => {
+            const [lbl, cls] = scoreLabel(dim.score);
+            return `<div class="strength-row">
+              <div class="strength-dim">${dim.label}</div>
+              <div class="bar-bg"><div class="bar-fill" style="width:${dim.score}%"></div></div>
+              <div class="bar-label ${cls}">${lbl}</div>
+            </div>
+            ${dim.insight ? `<div class="dim-insight">${dim.insight}</div>` : ''}`;
+          }).join('')}
+        </div>
+      </div>`;
+
+      if (d.diagnosis) {
+        html += `<div class="diag-section" style="margin-top:16px;">
+          <div class="diag-top"><div class="diag-label">Diagnosis</div></div>
+          <div class="diag-body">${fmt(d.diagnosis)}</div>
+        </div>`;
+      }
+
+      if (d.working) {
+        html += `<div class="diag-section">
+          <div class="diag-top"><div class="diag-label">What is working</div></div>
+          <div class="diag-body">${fmt(d.working)}</div>
+        </div>`;
+      }
+
+      if (d.positioning) {
+        html += `<div class="diag-section">
+          <div class="diag-top"><div class="diag-label">Your positioning starting point</div></div>
+          <div class="positioning-statement">${fmt(d.positioning)}</div>
+        </div>`;
+      }
+
+      if (d.nextstep) {
+        html += `<div class="diag-section" style="border-color: rgba(201,168,76,0.6);">
+          <div class="nextstep-top"><div class="nextstep-label">One next step</div></div>
+          <div class="nextstep-body">${fmt(d.nextstep)}</div>
+        </div>`;
+      }
+
+    } else if (S.loading) {
+      html += `<div class="feedback-box" style="margin-top:28px;">
+        <div class="feedback-top"><div class="feedback-label">Full diagnosis</div></div>
+        <div class="feedback-body loading">Preparing your positioning diagnosis...</div>
+      </div>`;
+    }
+  }
+
+  if (S.error) {
+    html += `<div class="error-msg">${S.error}</div>`;
+  }
+
+  // Navigation
+  const hasPhaseFeedback = S.phaseFeedback[S.phase] !== null;
+  const hasFinalDiagnosis = S.diagnosis !== null;
+  const isLast = S.phase === 2;
+  const canGetFeedback = !S.loading && S.phase < 2 && !hasPhaseFeedback;
+  const canGetDiagnosis = !S.loading && isLast && !hasFinalDiagnosis;
+
+  html += `<div class="nav-row">
+    <div>${S.phase > 0 ? `<button class="btn btn-outline" onclick="goPhase(${S.phase - 1})">Back</button>` : `<button class="btn btn-outline" onclick="S.screen='welcome';render()">Home</button>`}</div>
+    <div class="nav-right">
+      ${canGetFeedback ? `<button class="btn btn-gold" onclick="getPhraseFeedback(${S.phase})">Get feedback on this phase</button>` : ''}
+      ${canGetDiagnosis ? `<button class="btn btn-gold" onclick="getFullDiagnosis()">Get my full diagnosis</button>` : ''}
+      ${!isLast ? `<button class="btn btn-navy" onclick="goPhase(${S.phase + 1})">${hasPhaseFeedback ? 'Continue' : 'Skip feedback →'}</button>` : ''}
+    </div>
+  </div>`;
+
+  document.getElementById('content').innerHTML = html;
+}
+
+function render() {
+  renderProgress();
+  if (S.screen === 'welcome') renderWelcome();
+  else renderPhase();
+}
+
+render();
+</script>
+</body>
+</html>
