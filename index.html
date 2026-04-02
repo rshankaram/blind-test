@@ -204,6 +204,7 @@ const S = {
   homepageUrl: '',
   homepageText: '',
   mirror: null,
+  leftPanel: null,
   mirrorLoading: false,
   pathwayPrefill: null,
   pathwayLoading: false,
@@ -351,7 +352,39 @@ PROBLEM: [One sentence — the core business problem in the client's language, n
 DIFFERENTIATOR: [One sentence — the specific earned thing that makes them the right choice]`;
 }
 
-function finalPrompt() {
+function leftPanelPrompt() {
+  return `You are a positioning consultant synthesising what an IT services founder believes their positioning to be, based on their diagnostic answers. Work with whatever they have given you — if they have not named specific clients, derive the pattern from what they described. If a dimension is unclear, say so plainly in one sentence rather than echoing their vague answer.
+
+Their answers:
+
+How they introduce their firm: "${a('p1q1')}"
+Why prospects should choose them: "${a('p1q2')}"
+What they want to be known for: "${a('p1q3')}"
+Best clients they described: "${a('p2q1')}"
+What those clients had in common: "${a('p2q2')}"
+The core problem they solve: "${a('p2q3')}"
+What success looks like post-engagement: "${a('p2q4')}"
+What clients say when referring them: "${a('p2q5')}"
+Why they win against larger competitors: "${a('p2q6')}"
+What competitors cannot replicate: "${a('p2q7')}"
+
+Return ONLY this format — one sentence each, no preamble:
+
+LEFT_AUDIENCE: [One sentence synthesising who they most credibly serve — derived from the client patterns they described, not their aspirational answer. If vague, say "Not yet clearly defined — the patterns suggest X."]
+LEFT_PROBLEM: [One sentence naming the core business problem they solve — in plain language. If unclear, say "Not yet clearly articulated — closest signal is X."]
+LEFT_DIFFERENTIATOR: [One sentence naming what makes them the right choice — grounded in something they actually said. If nothing specific was given, say "Not yet named — no clear differentiator emerged from the answers."]
+LEFT_QUOTE: [The single most specific, useful phrase the founder used across all their answers — something that could anchor a positioning statement. Max 15 words. If nothing stands out, leave blank.]`;
+}
+
+function parseLeftPanel(text) {
+  const get = (key) => { const m = text.match(new RegExp(key + ':\\s*(.+)', 'i')); return m ? m[1].trim() : ''; };
+  return {
+    audience: get('LEFT_AUDIENCE'),
+    problem: get('LEFT_PROBLEM'),
+    differentiator: get('LEFT_DIFFERENTIATOR'),
+    quote: get('LEFT_QUOTE')
+  };
+}
   return `You are a senior positioning consultant with deep experience in Indian IT services — founder-led firms between ₹15 crore and ₹400 crore revenue. You have completed a full diagnostic with a founder and their homepage has been independently evaluated by AI as a cold buyer would read it.
 
 PHASE 1 — CURRENT POSITION
@@ -473,17 +506,28 @@ async function runMirror() {
   syncAnswersFromDOM();
   const url = S.homepageUrl;
   if (!url) { S.error = 'Please enter your homepage URL.'; render(); return; }
-  S.mirrorLoading = true; S.error = null; render();
+  S.mirrorLoading = true; S.error = null;
+  S.mirror = null; S.leftPanel = null; S.pathwayPrefill = null;
+  S.pathwayLoading = true;
+  render();
   try {
     const pageText = await fetchHomepage(url);
     S.homepageText = pageText;
-    const mirrorText = await callAPI(mirrorPrompt(pageText), 'mirror');
+    const [mirrorText, leftText] = await Promise.all([
+      callAPI(mirrorPrompt(pageText), 'mirror'),
+      callAPI(leftPanelPrompt(), 'mirror')
+    ]);
     S.mirror = parseMirror(mirrorText);
+    S.leftPanel = parseLeftPanel(leftText);
+    S.mirrorLoading = false;
+    render();
     await loadPathwayPrefill();
   } catch(e) {
     S.error = e.message || 'Could not evaluate homepage. Please check the URL and try again.';
+    S.mirrorLoading = false;
+    S.pathwayLoading = false;
+    render();
   }
-  S.mirrorLoading = false; render();
   setTimeout(() => document.querySelector('.mirror-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
 }
 
@@ -663,31 +707,31 @@ function renderPhase() {
     </div>`;
 
     if (S.mirrorLoading) {
-      html += `<div class="feedback-box"><div class="feedback-top"><div class="feedback-label">Reading your homepage</div></div><div class="feedback-body">Fetching your homepage and evaluating it as a buyer would see it...</div></div>`;
+      html += `<div class="feedback-box"><div class="feedback-top"><div class="feedback-label">Reading your homepage</div></div><div class="feedback-body">Fetching your homepage and building the mirror — this takes about 10 seconds...</div></div>`;
     }
 
-    if (S.mirror) {
+    if (S.mirror && S.leftPanel) {
       // Two-panel mirror visual
+      const lp = S.leftPanel;
       html += `<div class="mirror-wrap">
         <div class="mirror-label">The Mirror</div>
         <div class="mirror-panels">
           <div class="mirror-left">
             <div class="mirror-panel-label">What you believe</div>
-            <div class="mirror-panel-title">Your positioning — in your words</div>
+            <div class="mirror-panel-title">Your positioning — synthesised from your answers</div>
             <div class="mirror-item">
               <div class="mirror-item-dim">Who you serve</div>
-              <div class="mirror-item-text">${a('p2q2') || a('p2q1') || '—'}</div>
-              ${a('p2q1') ? `<div class="mirror-quote">"${a('p2q1').slice(0,120)}${a('p2q1').length > 120 ? '...' : ''}"</div>` : ''}
+              <div class="mirror-item-text">${lp.audience || '—'}</div>
             </div>
             <div class="mirror-item">
               <div class="mirror-item-dim">What you solve</div>
-              <div class="mirror-item-text">${a('p2q3') || '—'}</div>
-              ${a('p2q4') ? `<div class="mirror-quote">"${a('p2q4').slice(0,100)}${a('p2q4').length > 100 ? '...' : ''}"</div>` : ''}
+              <div class="mirror-item-text">${lp.problem || '—'}</div>
             </div>
             <div class="mirror-item">
               <div class="mirror-item-dim">Why you</div>
-              <div class="mirror-item-text">${a('p2q7') || a('p2q6') || '—'}</div>
+              <div class="mirror-item-text">${lp.differentiator || '—'}</div>
             </div>
+            ${lp.quote ? `<div class="mirror-gap" style="color:var(--gold-light); border-top-color:rgba(201,168,76,0.25);">"${lp.quote}"</div>` : ''}
           </div>
           <div class="mirror-divider"></div>
           <div class="mirror-right">
