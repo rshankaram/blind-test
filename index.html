@@ -31,7 +31,7 @@ body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--t
 .p-step.done { color: rgba(201,168,76,0.4); border-bottom-color: rgba(201,168,76,0.2); }
 
 /* Layout */
-.wrap { max-width: 800px; margin: 0 auto; padding: 48px 48px 100px; }
+.wrap { max-width: 820px; margin: 0 auto; padding: 48px 48px 100px; }
 
 /* Welcome */
 .welcome { text-align: center; padding: 28px 20px 20px; }
@@ -45,20 +45,12 @@ body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--t
 .meta-lbl { font-size: 12px; color: var(--text-light); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
 .welcome-note { font-size: 16px; color: var(--text-light); line-height: 1.7; max-width: 480px; margin: 0 auto 28px; font-style: italic; }
 
-/* Setup box (phase 1 instruction) */
-.setup-box { background: var(--navy-deep); border-radius: 8px; padding: 24px 28px; margin-bottom: 36px; }
-.setup-box-label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-.setup-box-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold-light); margin-bottom: 12px; font-weight: 500; }
-.setup-box-steps { list-style: none; }
-.setup-box-steps li { font-size: 17px; color: rgba(255,255,255,0.7); padding: 5px 0; line-height: 1.6; padding-left: 20px; position: relative; }
-.setup-box-steps li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
-
 /* Phase header */
 .phase-head { margin-bottom: 36px; padding-bottom: 26px; border-bottom: 1px solid var(--border-light); }
 .phase-eyebrow { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
 .phase-title { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 500; color: var(--navy-deep); line-height: 1.2; margin-bottom: 6px; }
 .phase-dur { font-size: 14px; color: var(--text-light); letter-spacing: 0.07em; margin-bottom: 12px; }
-.phase-desc { font-size: 18px; color: var(--text-mid); line-height: 1.8; max-width: 620px; }
+.phase-desc { font-size: 18px; color: var(--text-mid); line-height: 1.8; max-width: 640px; }
 
 /* Dimension label */
 .dim-head { font-size: 12px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--gold); margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--gold-pale); }
@@ -71,15 +63,50 @@ textarea { width: 100%; min-height: 96px; padding: 14px 16px; border: 1px solid 
 textarea:focus { outline: none; border-color: var(--gold); }
 textarea::placeholder { color: #c0b8ae; }
 
-/* Canvas (phase 3) */
+/* URL input */
+.url-block { margin-bottom: 32px; }
+.url-label { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; color: var(--navy-deep); margin-bottom: 8px; line-height: 1.4; }
+.url-guide { font-size: 16px; color: var(--text-light); font-style: italic; margin-bottom: 12px; padding-left: 14px; border-left: 2px solid var(--border); line-height: 1.7; }
+.url-input-row { display: flex; gap: 10px; }
+.url-input { flex: 1; padding: 14px 16px; border: 1px solid var(--border); border-radius: 4px; background: var(--white); font-family: 'Jost', sans-serif; font-size: 17px; font-weight: 300; color: var(--text); transition: border-color 0.15s; }
+.url-input:focus { outline: none; border-color: var(--gold); }
+
+/* Mirror visual */
+.mirror-wrap { margin: 36px 0; }
+.mirror-label { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; text-align: center; }
+.mirror-panels { display: grid; grid-template-columns: 1fr 3px 1fr; gap: 0; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 20px rgba(15,29,44,0.12); }
+.mirror-left { background: var(--navy-deep); padding: 28px 26px; }
+.mirror-right { background: var(--gold-pale); padding: 28px 26px; }
+.mirror-divider { background: linear-gradient(to bottom, var(--gold) 0%, rgba(201,168,76,0.2) 50%, var(--gold) 100%); }
+.mirror-panel-label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px; }
+.mirror-left .mirror-panel-label { color: rgba(201,168,76,0.5); }
+.mirror-right .mirror-panel-label { color: var(--gold); }
+.mirror-panel-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; margin-bottom: 16px; line-height: 1.3; }
+.mirror-left .mirror-panel-title { color: var(--gold-light); }
+.mirror-right .mirror-panel-title { color: var(--navy-deep); }
+.mirror-item { margin-bottom: 14px; }
+.mirror-item-dim { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+.mirror-left .mirror-item-dim { color: rgba(201,168,76,0.4); }
+.mirror-right .mirror-item-dim { color: var(--gold); }
+.mirror-item-text { font-size: 15px; line-height: 1.65; }
+.mirror-left .mirror-item-text { color: rgba(255,255,255,0.78); }
+.mirror-right .mirror-item-text { color: var(--navy-mid); }
+.mirror-quote { font-style: italic; font-size: 14px; margin-top: 4px; opacity: 0.65; }
+.mirror-left .mirror-quote { color: var(--gold-light); }
+.mirror-right .mirror-quote { color: var(--navy); }
+.mirror-gap { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(201,168,76,0.2); font-size: 14px; color: var(--gold); font-style: italic; line-height: 1.6; }
+.mirror-right .mirror-gap { border-top-color: rgba(201,168,76,0.3); color: var(--navy-mid); }
+
+/* Canvas */
+.canvas-section-label { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 36px 0 8px; }
+.canvas-section-desc { font-size: 16px; color: var(--text-mid); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
 .canvas-block { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 12px; }
 .canvas-top { background: var(--navy-deep); padding: 16px 20px; }
 .canvas-top-title { font-family: 'Cormorant Garamond', serif; font-size: 21px; color: var(--gold-light); font-weight: 500; }
 .canvas-top-hint { font-size: 14px; color: rgba(201,168,76,0.42); font-style: italic; margin-top: 4px; }
-.canvas-prefill { font-size: 14px; color: rgba(201,168,76,0.6); margin-top: 6px; font-style: italic; }
+.canvas-prefill-tag { font-size: 12px; color: rgba(201,168,76,0.55); margin-top: 5px; }
 .canvas-body textarea { border: none; border-radius: 0; min-height: 84px; padding: 14px 18px; font-size: 17px; }
 .canvas-body textarea:focus { outline: none; border: none; box-shadow: none; }
-.canvas-loading { padding: 16px 18px; font-size: 15px; color: var(--text-light); font-style: italic; background: var(--white); }
 
 /* Strength card */
 .strength-card { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-top: 32px; }
@@ -108,19 +135,17 @@ textarea::placeholder { color: #c0b8ae; }
 .positioning-statement { background: var(--white); padding: 22px 26px; font-family: 'Cormorant Garamond', serif; font-size: 23px; color: var(--navy-deep); line-height: 1.65; font-style: italic; }
 .nextstep-top { background: var(--gold); padding: 12px 20px; }
 .nextstep-label { font-size: 12px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--navy-deep); font-weight: 500; }
-.nextstep-body { background: var(--white); padding: 22px 26px; font-size: 17px; color: var(--text); line-height: 1.9; font-weight: 400; }
+.nextstep-body { background: var(--white); padding: 22px 26px; font-size: 17px; color: var(--text); line-height: 1.9; }
 
-/* Outreach + AI tools notes */
+/* Outreach + AI tools */
 .outreach-note { margin-top: 14px; border: 1px solid var(--border-light); border-radius: 6px; background: var(--cream); padding: 22px 26px; }
 .outreach-note p { font-size: 17px; color: var(--text-mid); line-height: 1.8; }
 .outreach-note a { color: var(--navy); }
 .ai-tools-note { margin-top: 14px; border-left: 3px solid var(--gold-pale); padding: 16px 20px; background: var(--white); border-radius: 0 4px 4px 0; }
 .ai-tools-note p { font-size: 15px; color: var(--text-light); line-height: 1.75; font-style: italic; }
-
-/* Email button row */
 .email-row { margin-top: 24px; display: flex; justify-content: center; }
 
-/* Loading box */
+/* Loading / feedback box */
 .feedback-box { margin-top: 28px; border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; overflow: hidden; }
 .feedback-top { background: var(--navy); padding: 12px 20px; }
 .feedback-label { font-size: 12px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--gold); }
@@ -141,13 +166,16 @@ textarea::placeholder { color: #c0b8ae; }
 .error-msg { margin-top: 16px; padding: 14px 18px; background: #fff5f5; border: 1px solid #f5c0c0; border-radius: 4px; font-size: 15px; color: #a32d2d; }
 .footer { text-align: center; padding: 24px 48px; border-top: 1px solid var(--border-light); font-size: 14px; color: var(--text-light); letter-spacing: 0.06em; font-family: 'Cormorant Garamond', serif; font-style: italic; }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .header { padding: 18px 20px; flex-direction: column; gap: 10px; align-items: flex-start; }
   .header-right { text-align: left; }
   .progress { padding: 0 10px; overflow-x: auto; }
   .wrap { padding: 28px 20px 70px; }
   .phase-title, .welcome-title { font-size: 30px; }
+  .mirror-panels { grid-template-columns: 1fr; }
+  .mirror-divider { display: none; }
   .strength-row { grid-template-columns: 110px 1fr 80px; gap: 10px; }
+  .url-input-row { flex-direction: column; }
 }
 </style>
 </head>
@@ -173,6 +201,10 @@ const S = {
   screen: 'welcome',
   phase: 0,
   answers: {},
+  homepageUrl: '',
+  homepageText: '',
+  mirror: null,
+  mirrorLoading: false,
   pathwayPrefill: null,
   pathwayLoading: false,
   diagnosis: null,
@@ -183,6 +215,56 @@ const S = {
 
 function a(id) { return S.answers[id] || ''; }
 
+const PHASES = [
+  {
+    num: 1, title: 'The Reaction', duration: '10 minutes',
+    desc: 'Answer these questions honestly — as a founder who has built something real. We are not asking you to pretend to be someone else. We are asking you to think carefully about what your market currently sees.',
+    dims: [
+      {
+        label: 'Your current market position',
+        questions: [
+          { id: 'p1q1', q: 'How do you currently introduce your firm to a new prospect — in one or two sentences?', guide: 'The actual words you use. Not the polished version. What do you say?' },
+          { id: 'p1q2', q: 'When a prospect asks "why should we choose you over others?" — what do you say?', guide: 'Again, the real answer. Not the deck answer.' },
+          { id: 'p1q3', q: 'What kind of work do you most want to be known for — that you are not yet known for?', guide: 'The gap between where you are positioned today and where you want to be.' }
+        ]
+      }
+    ]
+  },
+  {
+    num: 2, title: 'The Diagnosis', duration: '15–20 minutes',
+    desc: 'Seven questions across three dimensions. These are not easy to answer well — and that difficulty is itself useful data. The questions you struggle with most point to where the positioning work needs to happen.',
+    dims: [
+      {
+        label: 'Who you serve',
+        questions: [
+          { id: 'p2q1', q: 'Describe the last three clients you were genuinely proud to deliver for.', guide: 'Industry, size, the problem they came with, what you solved. Not "a mid-size manufacturer" — "a ₹80 crore auto components firm in Pune struggling with inventory visibility before a board review."' },
+          { id: 'p2q2', q: 'What did those three clients have in common — beyond the obvious?', guide: 'Same buying trigger? Same internal pressure? Same kind of decision-maker? The pattern is more useful than the examples.' }
+        ]
+      },
+      {
+        label: 'What problem you solve',
+        questions: [
+          { id: 'p2q3', q: 'What is the one problem your firm has been called in to fix more than any other?', guide: 'Describe it as the client would — in business terms, not technology terms. What were they worried about before you arrived?' },
+          { id: 'p2q4', q: 'What does success look like six months after you finish an engagement?', guide: 'What is measurably different? What can the client point to and say "that changed because of them"?' },
+          { id: 'p2q5', q: 'What do clients say when they refer you to someone else?', guide: 'Not what you wish they said — what have you actually heard? If you are not sure, that is worth noting.' }
+        ]
+      },
+      {
+        label: 'Why you over others',
+        questions: [
+          { id: 'p2q6', q: 'Name a deal you won where a larger or better-known firm was also shortlisted. Why did the client choose you?', guide: 'If you cannot recall one — what do you believe the real reason would be? Be honest, not aspirational.' },
+          { id: 'p2q7', q: 'What does your firm know or do that most competitors cannot replicate quickly?', guide: 'A sector relationship, a methodology, a team depth, a track record in a specific problem type. Something earned, not claimed.' }
+        ]
+      }
+    ]
+  },
+  {
+    num: 3, title: 'The Mirror', duration: '10 minutes',
+    desc: 'Enter your homepage URL. The AI will read it as a cold buyer would — no context, no prior knowledge. Then compare what it sees against what you said in Phase 2.',
+    isPhase3: true
+  }
+];
+
 function getPhaseAnswerIds(phaseIdx) {
   const p = PHASES[phaseIdx];
   const ids = [];
@@ -192,15 +274,23 @@ function getPhaseAnswerIds(phaseIdx) {
   return ids;
 }
 
+function validatePhase(phaseIdx) {
+  if (phaseIdx === 2) return [];
+  return getPhaseAnswerIds(phaseIdx).filter(id => !S.answers[id] || S.answers[id].trim().length < 3);
+}
+
 function syncAnswersFromDOM() {
   getPhaseAnswerIds(S.phase).forEach(id => {
     const el = document.getElementById(id);
     if (el) S.answers[id] = el.value;
   });
-}
-
-function validatePhase(phaseIdx) {
-  return getPhaseAnswerIds(phaseIdx).filter(id => !S.answers[id] || S.answers[id].trim().length < 3);
+  const urlEl = document.getElementById('homepage-url');
+  if (urlEl) S.homepageUrl = urlEl.value.trim();
+  const canvasIds = ['c1','c2','c3'];
+  canvasIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) S.answers[id] = el.value;
+  });
 }
 
 function highlightMissing(ids) {
@@ -215,161 +305,100 @@ function highlightMissing(ids) {
   });
 }
 
-const PHASES = [
-  {
-    num: 1, title: 'The Reaction', duration: '5 minutes',
-    desc: 'Before you answer the questions below — open your firm\'s homepage in another tab. Read the first three lines. Now imagine you are a buyer seeing it for the first time. You know nothing about this firm. What does this page tell you?',
-    hasSetup: true,
-    questions: [
-      {
-        id: 'p1q1',
-        q: 'What is your honest first impression of the homepage — as a buyer?',
-        guide: 'Not as the person who built the firm. As someone who just landed on this page with a problem to solve.'
-      },
-      {
-        id: 'p1q2',
-        q: 'If this were a competitor\'s website, would you shortlist them?',
-        guide: 'Yes or no — and more importantly, why. What is clear, and what is missing?'
-      },
-      {
-        id: 'p1q3',
-        q: 'What does this homepage say the firm is best at?',
-        guide: 'Read it literally. Not what you know the firm does — what does this page actually communicate?'
-      }
-    ]
-  },
-  {
-    num: 2, title: 'The Diagnosis', duration: '15–20 minutes',
-    desc: 'Eight questions across three dimensions. These are not easy to answer well — and that difficulty is itself data. The questions you struggle with most point to where the positioning work needs to happen.',
-    dims: [
-      {
-        label: 'Who is this for',
-        questions: [
-          {
-            id: 'p2q1',
-            q: 'Describe the last three clients you were genuinely proud to deliver for.',
-            guide: 'Industry, size, the problem they came with, what you solved. Be specific — not "a mid-size manufacturer" but "a ₹80 crore auto components firm in Pune struggling with inventory visibility."'
-          },
-          {
-            id: 'p2q2',
-            q: 'What did those three clients have in common — beyond the obvious?',
-            guide: 'Same buying trigger? Same internal problem? Same kind of decision-maker? The pattern is more useful than the individual examples.'
-          }
-        ]
-      },
-      {
-        label: 'What problem you solve best',
-        questions: [
-          {
-            id: 'p2q3',
-            q: 'What is the one problem your firm has been called in to fix more than any other?',
-            guide: 'Describe it as the client would — not in technical terms, but in business terms. What were they worried about before you arrived?'
-          },
-          {
-            id: 'p2q4',
-            q: 'What does success look like six months after you finish an engagement?',
-            guide: 'What is measurably different? What can the client\'s leadership point to and say "that changed because of them"?'
-          },
-          {
-            id: 'p2q5',
-            q: 'What do clients say when they refer you to someone else?',
-            guide: 'Not what you wish they said — what have you actually heard? If you don\'t know, that is worth noting too.'
-          }
-        ]
-      },
-      {
-        label: 'Why you over others',
-        questions: [
-          {
-            id: 'p2q6',
-            q: 'Name a deal you won where a larger or better-known firm was also shortlisted. Why did the client choose you?',
-            guide: 'If you cannot recall one — what do you believe the real reason would be? Be honest, not aspirational.'
-          },
-          {
-            id: 'p2q7',
-            q: 'What is something your firm does — or knows — that most competitors genuinely cannot replicate quickly?',
-            guide: 'A sector relationship, a methodology, a team depth, a reference. Not a capability anyone can claim. Something earned.'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    num: 3, title: 'The Pathway', duration: '10 minutes',
-    desc: 'The AI has read your answers and drafted a starting point for each of the three fields below. Edit freely — these are suggestions, not conclusions. Make them true to your firm in your own words.',
-    canvas: [
-      { id: 'c1', label: 'The audience you can most credibly serve', hint: 'Who you have the strongest proof for — not who you aspire to serve' },
-      { id: 'c2', label: 'The problem you solve better than most', hint: 'In the client\'s language, not yours' },
-      { id: 'c3', label: 'The one thing that makes you the right choice', hint: 'Specific and earned — something a competitor cannot simply claim tomorrow' }
-    ]
-  }
-];
+function mirrorPrompt(homepageText) {
+  return `You are evaluating an IT services firm's homepage as a cold buyer would — someone who has never heard of this firm, landed on the page, and is trying to quickly understand if this company is relevant to them.
+
+Here is the homepage text:
+---
+${homepageText}
+---
+
+Here is what the founder believes their positioning to be, based on a diagnostic they just completed:
+
+How they currently introduce their firm: "${a('p1q1')}"
+Why they say prospects should choose them: "${a('p1q2')}"
+What they most want to be known for: "${a('p1q3')}"
+Their best clients and what they had in common: "${a('p2q1')} / ${a('p2q2')}"
+The core problem they solve: "${a('p2q3')}"
+What success looks like post-engagement: "${a('p2q4')}"
+What they have that competitors cannot replicate: "${a('p2q7')}"
+
+Now respond in EXACTLY this format — no other text:
+
+BUYER_AUDIENCE: [One sentence: who does this homepage appear to be talking to, based purely on what is written]
+BUYER_PROBLEM: [One sentence: what problem does this homepage claim to solve, as a buyer would read it]
+BUYER_DIFFERENTIATOR: [One sentence: why would a buyer choose this firm over others, based on what the homepage says]
+BUYER_REACTION: [One sentence: the honest overall buyer reaction — would they stay on this page or leave, and why]
+GAP: [One sentence: the single most important gap between what the founder believes their positioning is and what the homepage actually communicates to a buyer]`;
+}
 
 function pathwayPrefillPrompt() {
-  return `You are a positioning consultant working with an IT services founder in India. Based on their diagnostic answers, draft three short, specific positioning inputs for them to review and edit.
+  return `You are a positioning consultant. Based on this founder's diagnostic answers and the AI buyer reaction to their homepage, draft three positioning inputs for them to review and edit.
 
-Their answers:
-
-Homepage first impression: "${a('p1q1')}"
-Would they shortlist this firm: "${a('p1q2')}"
-What homepage communicates: "${a('p1q3')}"
-
-Best clients described: "${a('p2q1')}"
+Founder's best clients: "${a('p2q1')}"
 What those clients had in common: "${a('p2q2')}"
-Problem they are most called in to fix: "${a('p2q3')}"
-What success looks like post-engagement: "${a('p2q4')}"
+Core problem they solve: "${a('p2q3')}"
+What success looks like: "${a('p2q4')}"
 What clients say when referring them: "${a('p2q5')}"
 Why they win against larger competitors: "${a('p2q6')}"
-What they do that competitors cannot replicate: "${a('p2q7')}"
+What competitors cannot replicate: "${a('p2q7')}"
+${S.mirror ? `AI buyer read of their homepage — gap identified: "${S.mirror.gap}"` : ''}
 
-Return ONLY this format, nothing else:
+Return ONLY this format:
 
-AUDIENCE: [One specific sentence describing the most credible audience based on their answers — name the type of firm, the context, and why this firm is credible with them]
-PROBLEM: [One sentence naming the core business problem they solve — in the client's language, not technical language]
-DIFFERENTIATOR: [One sentence naming the specific, earned thing that makes them the right choice — grounded in what they actually said]`;
+AUDIENCE: [One specific sentence — the most credible audience based on their answers, named precisely]
+PROBLEM: [One sentence — the core business problem in the client's language, not technology language]
+DIFFERENTIATOR: [One sentence — the specific earned thing that makes them the right choice]`;
 }
 
 function finalPrompt() {
-  return `You are a senior positioning consultant with deep experience in Indian IT services — founder-led firms between ₹15 crore and ₹400 crore revenue. You have completed a full diagnostic with a founder. Here are all their answers:
+  return `You are a senior positioning consultant with deep experience in Indian IT services — founder-led firms between ₹15 crore and ₹400 crore revenue. You have completed a full diagnostic with a founder and their homepage has been independently evaluated by AI as a cold buyer would read it.
 
-PHASE 1 — THE REACTION
-Homepage first impression as a buyer: "${a('p1q1')}"
-Would they shortlist this firm as a competitor: "${a('p1q2')}"
-What the homepage actually communicates: "${a('p1q3')}"
+PHASE 1 — CURRENT POSITION
+How they introduce their firm: "${a('p1q1')}"
+Why prospects should choose them: "${a('p1q2')}"
+What they want to be known for: "${a('p1q3')}"
 
 PHASE 2 — THE DIAGNOSIS
-Best clients described in detail: "${a('p2q1')}"
+Best clients in detail: "${a('p2q1')}"
 What those clients had in common: "${a('p2q2')}"
-The problem they are most called in to fix: "${a('p2q3')}"
+Core problem they solve: "${a('p2q3')}"
 What success looks like 6 months post-engagement: "${a('p2q4')}"
-What clients say when they refer them: "${a('p2q5')}"
-Why they won a deal against a larger firm: "${a('p2q6')}"
-What competitors cannot easily replicate: "${a('p2q7')}"
+What clients say when referring them: "${a('p2q5')}"
+Why they won against a larger competitor: "${a('p2q6')}"
+What competitors cannot replicate: "${a('p2q7')}"
+
+THE MIRROR — AI BUYER READ OF THEIR HOMEPAGE
+Who the homepage appears to target: "${S.mirror ? S.mirror.audience : 'Not evaluated'}"
+What problem the homepage claims to solve: "${S.mirror ? S.mirror.problem : 'Not evaluated'}"
+Why a buyer would choose them per the homepage: "${S.mirror ? S.mirror.differentiator : 'Not evaluated'}"
+Overall buyer reaction: "${S.mirror ? S.mirror.reaction : 'Not evaluated'}"
+The gap between positioning belief and homepage reality: "${S.mirror ? S.mirror.gap : 'Not evaluated'}"
 
 PHASE 3 — THE PATHWAY (founder-edited)
 The audience they serve most credibly: "${a('c1')}"
 The problem they solve better than most: "${a('c2')}"
 What makes them the right choice: "${a('c3')}"
 
-Write a full positioning diagnosis in this exact structure:
+Write the full positioning diagnosis in this exact structure:
 
 DIAGNOSIS
-[3 to 4 sentences. Name the core positioning finding — what is clear, what is weak, what the gap between their actual capability and their current market presence appears to be. Be direct and constructive. Reference specific things they said.]
+[3 to 4 sentences. Name the core finding — what the mirror revealed, what is genuinely strong, and what the central positioning gap is. Be direct and constructive. Reference specific things they said and what the homepage AI read found.]
 
-WHO YOU SERVE: [score 1-100] | [one sentence — what is clear or credible about their audience definition, and what still needs sharpening]
-WHAT YOU SOLVE: [score 1-100] | [one sentence — how clearly and compellingly they can articulate the problem they solve]
-WHY YOU: [score 1-100] | [one sentence — how differentiated and defensible their reason to choose is]
+WHO YOU SERVE: [score 1-100] | [one sentence on clarity and credibility of their audience definition]
+WHAT YOU SOLVE: [score 1-100] | [one sentence on how compellingly they articulate the problem they solve]
+WHY YOU: [score 1-100] | [one sentence on how differentiated and defensible their reason to choose is]
 
 WHAT IS WORKING
-[2 to 3 sentences. Name specific strengths — grounded in exact things they wrote. If they said something that is genuinely strong positioning material, quote it briefly and explain why it works.]
+[2 to 3 sentences. Name specific strengths grounded in exactly what they wrote. If something they said is genuinely strong positioning material, name it and explain why it works.]
 
 RECOMMENDED ACTIONS
-[3 concrete, sequenced actions — numbered. Each action should be specific enough to act on this week or this month. Not strategies — moves. Include the reasoning for each in one sentence.]
+[3 numbered, sequenced actions. Each specific enough to act on this week or month. One sentence of reasoning per action.]
 
 YOUR POSITIONING STARTING POINT
-[A draft positioning statement — 2 sentences maximum. Specific enough that a competitor could not use it verbatim. Based entirely on what they shared. Something they could say out loud to a prospective client.]
+[A draft positioning statement — 2 sentences maximum. Specific enough that a competitor cannot use it verbatim. Based entirely on what they shared. Something they could say to a prospective client tomorrow.]
 
-Tone: direct, warm, trusted advisor. No bullet points within paragraphs. No generic advice. Everything connects to what they actually wrote.`;
+Tone: direct, warm, trusted advisor. No bullet points within paragraphs. No generic advice. Everything connects to what they actually wrote and what the mirror revealed.`;
 }
 
 async function callAPI(prompt, type) {
@@ -378,12 +407,34 @@ async function callAPI(prompt, type) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ prompt, type })
   });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || `Error ${res.status}`);
-  }
-  const data = await res.json();
-  return data.text;
+  if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || `Error ${res.status}`); }
+  return (await res.json()).text;
+}
+
+async function fetchHomepage(url) {
+  const res = await fetch('/api/diagnose', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'fetch_homepage', url })
+  });
+  if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || 'Could not fetch homepage'); }
+  return (await res.json()).text;
+}
+
+function parseMirror(text) {
+  const get = (key) => { const m = text.match(new RegExp(key + ':\\s*(.+)', 'i')); return m ? m[1].trim() : ''; };
+  return {
+    audience: get('BUYER_AUDIENCE'),
+    problem: get('BUYER_PROBLEM'),
+    differentiator: get('BUYER_DIFFERENTIATOR'),
+    reaction: get('BUYER_REACTION'),
+    gap: get('GAP')
+  };
+}
+
+function parsePrefill(text) {
+  const get = (key) => { const m = text.match(new RegExp(key + ':\\s*(.+)', 'i')); return m ? m[1].trim() : ''; };
+  return { c1: get('AUDIENCE'), c2: get('PROBLEM'), c3: get('DIFFERENTIATOR') };
 }
 
 function fmt(text) {
@@ -412,21 +463,32 @@ function parseDiagnosis(text) {
   };
 }
 
-function parsePrefill(text) {
-  const audience = (text.match(/AUDIENCE:\s*(.+)/i)||[])[1]||'';
-  const problem = (text.match(/PROBLEM:\s*(.+)/i)||[])[1]||'';
-  const diff = (text.match(/DIFFERENTIATOR:\s*(.+)/i)||[])[1]||'';
-  return { c1: audience.trim(), c2: problem.trim(), c3: diff.trim() };
-}
-
 function scoreLabel(s) {
   if (s >= 70) return ['Strong', 'strong'];
   if (s >= 45) return ['Developing', 'mid'];
   return ['Needs work', 'weak'];
 }
 
+async function runMirror() {
+  syncAnswersFromDOM();
+  const url = S.homepageUrl;
+  if (!url) { S.error = 'Please enter your homepage URL.'; render(); return; }
+  S.mirrorLoading = true; S.error = null; render();
+  try {
+    const pageText = await fetchHomepage(url);
+    S.homepageText = pageText;
+    const mirrorText = await callAPI(mirrorPrompt(pageText), 'mirror');
+    S.mirror = parseMirror(mirrorText);
+    await loadPathwayPrefill();
+  } catch(e) {
+    S.error = e.message || 'Could not evaluate homepage. Please check the URL and try again.';
+  }
+  S.mirrorLoading = false; render();
+  setTimeout(() => document.querySelector('.mirror-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+}
+
 async function loadPathwayPrefill() {
-  S.pathwayLoading = true; render();
+  S.pathwayLoading = true;
   try {
     const text = await callAPI(pathwayPrefillPrompt(), 'prefill');
     const prefill = parsePrefill(text);
@@ -434,22 +496,31 @@ async function loadPathwayPrefill() {
     if (prefill.c1 && !S.answers.c1) S.answers.c1 = prefill.c1;
     if (prefill.c2 && !S.answers.c2) S.answers.c2 = prefill.c2;
     if (prefill.c3 && !S.answers.c3) S.answers.c3 = prefill.c3;
-  } catch(e) {
-    S.pathwayPrefill = {};
-  }
-  S.pathwayLoading = false; render();
+  } catch(e) { S.pathwayPrefill = {}; }
+  S.pathwayLoading = false;
 }
 
 async function getFullDiagnosis() {
+  syncAnswersFromDOM();
   S.loading = true; S.error = null; render();
   try {
     const text = await callAPI(finalPrompt(), 'final');
     S.diagnosis = parseDiagnosis(text);
-  } catch(e) {
-    S.error = `Could not generate diagnosis: ${e.message}`;
-  }
+  } catch(e) { S.error = `Could not generate diagnosis: ${e.message}`; }
   S.loading = false; render();
   setTimeout(() => document.querySelector('.strength-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+}
+
+function handleFinalDiagnosis() {
+  syncAnswersFromDOM();
+  const c1 = S.answers.c1, c2 = S.answers.c2, c3 = S.answers.c3;
+  if (!c1 || c1.trim().length < 3 || !c2 || c2.trim().length < 3 || !c3 || c3.trim().length < 3) {
+    S.error = 'Please complete all three positioning fields before getting your diagnosis.';
+    render();
+    setTimeout(() => highlightMissing(['c1','c2','c3']), 50);
+    return;
+  }
+  getFullDiagnosis();
 }
 
 function goPhase(i) {
@@ -464,23 +535,8 @@ function goPhase(i) {
     }
     S.completedPhases.add(S.phase);
   }
-  S.error = null;
-  S.phase = i; S.screen = 'phase';
-  if (i === 2 && !S.pathwayPrefill && !S.pathwayLoading) loadPathwayPrefill();
+  S.error = null; S.phase = i; S.screen = 'phase';
   render(); window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function handleFinalDiagnosis() {
-  syncAnswersFromDOM();
-  const missing = validatePhase(S.phase);
-  if (missing.length > 0) {
-    S.error = 'Please complete all three fields before getting your diagnosis.';
-    render();
-    setTimeout(() => highlightMissing(missing), 50);
-    return;
-  }
-  S.completedPhases.add(S.phase);
-  getFullDiagnosis();
 }
 
 function buildEmailBody() {
@@ -490,6 +546,16 @@ function buildEmailBody() {
   lines.push('THE MIRROR TEST — POSITIONING DIAGNOSIS');
   lines.push('Growth StratEx | shankar@growthstratex.com');
   lines.push('');
+  if (S.mirror) {
+    lines.push('─────────────────────────────────────');
+    lines.push('THE MIRROR — WHAT YOUR HOMEPAGE SAYS TO A BUYER');
+    lines.push('─────────────────────────────────────');
+    lines.push(`Who the homepage targets: ${S.mirror.audience}`);
+    lines.push(`Problem it claims to solve: ${S.mirror.problem}`);
+    lines.push(`Buyer reaction: ${S.mirror.reaction}`);
+    lines.push(`The gap: ${S.mirror.gap}`);
+    lines.push('');
+  }
   lines.push('─────────────────────────────────────');
   lines.push('DIAGNOSIS');
   lines.push('─────────────────────────────────────');
@@ -520,15 +586,15 @@ function buildEmailBody() {
   lines.push(d.positioning);
   lines.push('');
   lines.push('─────────────────────────────────────');
-  lines.push('If you would like to talk through these findings, write to Shankar at shankar@growthstratex.com');
+  lines.push('To discuss these findings: shankar@growthstratex.com');
   lines.push('');
-  lines.push('There are several AI-powered tools that can help you refine your positioning language further — this diagnostic is designed to be done first, so you bring clarity to those tools rather than noise.');
+  lines.push('Note: Several AI tools can help you refine positioning language further. Use this diagnostic first — clarity before automation.');
   return lines.join('\n');
 }
 
 function emailReport() {
   const body = encodeURIComponent(buildEmailBody());
-  const subject = encodeURIComponent('My Mirror Test — Positioning Diagnosis');
+  const subject = encodeURIComponent('The Mirror Test — My Positioning Diagnosis');
   window.location.href = `mailto:?subject=${subject}&body=${body}`;
 }
 
@@ -548,17 +614,17 @@ function renderProgress() {
 function renderWelcome() {
   document.getElementById('content').innerHTML = `
     <div class="welcome">
-      <div class="welcome-eyebrow">A free tool from Growth StratEx</div>
+      <div class="welcome-eyebrow">A free diagnostic from Growth StratEx</div>
       <div class="welcome-title">The Mirror Test</div>
       <div class="welcome-divider"></div>
-      <div class="welcome-desc">Most IT services firms don't have a homepage problem. They have a positioning problem. The homepage is just where it becomes visible.<br><br>This diagnostic helps you see exactly where yours is weak — and what to do about it.</div>
+      <div class="welcome-desc">Most IT services firms don't have a homepage problem. They have a positioning problem. The homepage is just where it becomes visible.<br><br>This diagnostic surfaces the gap — between what you believe your positioning is, and what a buyer actually sees.</div>
       <div class="welcome-meta">
         <div class="meta-item"><div class="meta-val">3</div><div class="meta-lbl">Phases</div></div>
         <div class="meta-item"><div class="meta-val">30</div><div class="meta-lbl">Minutes</div></div>
         <div class="meta-item"><div class="meta-val">10</div><div class="meta-lbl">Questions</div></div>
         <div class="meta-item"><div class="meta-val">AI</div><div class="meta-lbl">Diagnosis</div></div>
       </div>
-      <div class="welcome-note">Answer specifically. Vague answers produce vague diagnoses. The more honest and concrete you are, the more useful this will be.</div>
+      <div class="welcome-note">The more specific your answers, the more useful the diagnosis. Vague answers produce vague results.</div>
       <button class="btn btn-navy" style="font-size:13px; padding:15px 44px;" onclick="goPhase(0)">Begin</button>
     </div>`;
 }
@@ -572,29 +638,6 @@ function renderPhase() {
     <div class="phase-desc">${p.desc}</div>
   </div>`;
 
-  if (p.hasSetup) {
-    html += `<div class="setup-box">
-      <div class="setup-box-label">Before you begin this phase</div>
-      <div class="setup-box-title">Do the mirror test now</div>
-      <ul class="setup-box-steps">
-        <li>Open your firm's homepage in another tab</li>
-        <li>Read the first three lines — slowly</li>
-        <li>Imagine you are a potential client who has never heard of you</li>
-        <li>Then come back here and answer the questions below</li>
-      </ul>
-    </div>`;
-  }
-
-  if (p.questions) {
-    p.questions.forEach(q => {
-      html += `<div class="q-block">
-        <div class="q-text">${q.q}</div>
-        <div class="q-guide">${q.guide}</div>
-        <textarea id="${q.id}" placeholder="Your answer..." oninput="S.answers['${q.id}']=this.value">${a(q.id)}</textarea>
-      </div>`;
-    });
-  }
-
   if (p.dims) {
     p.dims.forEach(dim => {
       html += `<div class="dim-head">${dim.label}</div>`;
@@ -602,74 +645,139 @@ function renderPhase() {
         html += `<div class="q-block">
           <div class="q-text">${q.q}</div>
           <div class="q-guide">${q.guide}</div>
-          <textarea id="${q.id}" placeholder="Your answer..." oninput="S.answers['${q.id}']=this.value">${a(q.id)}</textarea>
+          <textarea id="${q.id}" oninput="S.answers['${q.id}']=this.value">${a(q.id)}</textarea>
         </div>`;
       });
     });
   }
 
-  if (p.canvas) {
-    if (S.pathwayLoading) {
-      html += `<div class="feedback-box"><div class="feedback-top"><div class="feedback-label">Preparing your pathway</div></div><div class="feedback-body">Reading your answers and drafting starting points for each field...</div></div>`;
-    } else {
-      p.canvas.forEach(row => {
-        html += `<div class="canvas-block">
-          <div class="canvas-top">
-            <div class="canvas-top-title">${row.label}</div>
-            <div class="canvas-top-hint">${row.hint}</div>
-            ${S.pathwayPrefill ? '<div class="canvas-prefill">AI-suggested — edit to make it yours</div>' : ''}
-          </div>
-          <div class="canvas-body">
-            <textarea id="${row.id}" oninput="S.answers['${row.id}']=this.value">${a(row.id)}</textarea>
-          </div>
-        </div>`;
-      });
-    }
-  }
-
-  // Full diagnosis
-  if (S.phase === 2 && S.diagnosis) {
-    const d = S.diagnosis;
-    html += `<div class="strength-card">
-      <div class="strength-top">
-        <div class="strength-top-title">Positioning strength</div>
-        <div class="strength-top-sub">Scored across three dimensions from your answers</div>
-      </div>
-      <div class="strength-body">
-        ${d.dims.map(dim => {
-          const [lbl, cls] = scoreLabel(dim.score);
-          return `<div class="strength-row">
-            <div class="strength-dim">${dim.label}</div>
-            <div class="bar-bg"><div class="bar-fill" style="width:${dim.score}%"></div></div>
-            <div class="bar-label ${cls}">${lbl}</div>
-          </div>
-          ${dim.insight ? `<div class="dim-insight">${dim.insight}</div>` : ''}`;
-        }).join('')}
+  // Phase 3 — mirror
+  if (p.isPhase3) {
+    html += `<div class="url-block">
+      <div class="url-label">Enter your homepage URL</div>
+      <div class="url-guide">The AI will read it as a cold buyer — no context, no prior knowledge of your firm.</div>
+      <div class="url-input-row">
+        <input type="url" id="homepage-url" class="url-input" placeholder="https://yourfirm.com" value="${S.homepageUrl}" oninput="S.homepageUrl=this.value">
+        <button class="btn btn-gold" onclick="runMirror()" ${S.mirrorLoading ? 'disabled' : ''}>${S.mirrorLoading ? 'Reading...' : 'Show me the mirror'}</button>
       </div>
     </div>`;
 
-    if (d.diagnosis) html += `<div class="diag-section" style="margin-top:16px;"><div class="diag-top"><div class="diag-label">Diagnosis</div></div><div class="diag-body">${fmt(d.diagnosis)}</div></div>`;
-    if (d.working) html += `<div class="diag-section"><div class="diag-top"><div class="diag-label">What is working</div></div><div class="diag-body">${fmt(d.working)}</div></div>`;
-    if (d.actions) html += `<div class="diag-section"><div class="diag-top"><div class="diag-label">Recommended actions</div></div><div class="diag-body">${fmt(d.actions)}</div></div>`;
-    if (d.positioning) html += `<div class="diag-section"><div class="diag-top"><div class="diag-label">Your positioning starting point</div></div><div class="positioning-statement">${fmt(d.positioning)}</div></div>`;
+    if (S.mirrorLoading) {
+      html += `<div class="feedback-box"><div class="feedback-top"><div class="feedback-label">Reading your homepage</div></div><div class="feedback-body">Fetching your homepage and evaluating it as a buyer would see it...</div></div>`;
+    }
 
-    html += `<div class="outreach-note"><p>If what you found here confirms something you already suspected — or surfaces something unexpected — I am happy to talk it through. Positioning decisions have long tails and sometimes a conversation is the fastest way forward.<br><br>Write to me at <a href="mailto:shankar@growthstratex.com">shankar@growthstratex.com</a></p></div>`;
-    html += `<div class="ai-tools-note"><p>There are several excellent AI-powered tools that can help you research competitors, analyse messaging, and refine your positioning language. This diagnostic is designed to be done first — so you bring clarity to those tools rather than noise. Clarity before automation.</p></div>`;
-    html += `<div class="email-row"><button class="btn btn-navy" onclick="emailReport()">Email this report to myself</button></div>`;
+    if (S.mirror) {
+      // Two-panel mirror visual
+      html += `<div class="mirror-wrap">
+        <div class="mirror-label">The Mirror</div>
+        <div class="mirror-panels">
+          <div class="mirror-left">
+            <div class="mirror-panel-label">What you believe</div>
+            <div class="mirror-panel-title">Your positioning — in your words</div>
+            <div class="mirror-item">
+              <div class="mirror-item-dim">Who you serve</div>
+              <div class="mirror-item-text">${a('p2q2') || a('p2q1') || '—'}</div>
+              ${a('p2q1') ? `<div class="mirror-quote">"${a('p2q1').slice(0,120)}${a('p2q1').length > 120 ? '...' : ''}"</div>` : ''}
+            </div>
+            <div class="mirror-item">
+              <div class="mirror-item-dim">What you solve</div>
+              <div class="mirror-item-text">${a('p2q3') || '—'}</div>
+              ${a('p2q4') ? `<div class="mirror-quote">"${a('p2q4').slice(0,100)}${a('p2q4').length > 100 ? '...' : ''}"</div>` : ''}
+            </div>
+            <div class="mirror-item">
+              <div class="mirror-item-dim">Why you</div>
+              <div class="mirror-item-text">${a('p2q7') || a('p2q6') || '—'}</div>
+            </div>
+          </div>
+          <div class="mirror-divider"></div>
+          <div class="mirror-right">
+            <div class="mirror-panel-label">What the buyer sees</div>
+            <div class="mirror-panel-title">Your homepage — as a cold buyer reads it</div>
+            <div class="mirror-item">
+              <div class="mirror-item-dim">Who it appears to target</div>
+              <div class="mirror-item-text">${S.mirror.audience}</div>
+            </div>
+            <div class="mirror-item">
+              <div class="mirror-item-dim">Problem it claims to solve</div>
+              <div class="mirror-item-text">${S.mirror.problem}</div>
+            </div>
+            <div class="mirror-item">
+              <div class="mirror-item-dim">Buyer reaction</div>
+              <div class="mirror-item-text">${S.mirror.reaction}</div>
+            </div>
+            <div class="mirror-gap">The gap: ${S.mirror.gap}</div>
+          </div>
+        </div>
+      </div>`;
 
-  } else if (S.phase === 2 && S.loading) {
-    html += `<div class="feedback-box" style="margin-top:28px;"><div class="feedback-top"><div class="feedback-label">Generating your diagnosis</div></div><div class="feedback-body">Reading all your answers and preparing a full positioning diagnosis...</div></div>`;
+      // Canvas
+      html += `<div class="canvas-section-label">Your positioning starting point</div>
+        <div class="canvas-section-desc">The AI has drafted three fields based on your answers and what the mirror revealed. Edit them until they feel true — in your words, not ours.</div>`;
+
+      if (S.pathwayLoading) {
+        html += `<div class="feedback-box"><div class="feedback-top"><div class="feedback-label">Drafting your positioning</div></div><div class="feedback-body">Synthesising your answers into a starting point...</div></div>`;
+      } else {
+        const canvasFields = [
+          { id: 'c1', label: 'The audience you can most credibly serve', hint: 'Who you have the strongest proof for' },
+          { id: 'c2', label: 'The problem you solve better than most', hint: "In the client's language, not yours" },
+          { id: 'c3', label: 'What makes you the right choice', hint: 'Specific and earned — something a competitor cannot simply claim tomorrow' }
+        ];
+        canvasFields.forEach(row => {
+          html += `<div class="canvas-block">
+            <div class="canvas-top">
+              <div class="canvas-top-title">${row.label}</div>
+              <div class="canvas-top-hint">${row.hint}</div>
+              ${S.pathwayPrefill ? '<div class="canvas-prefill-tag">AI-suggested — edit to make it yours</div>' : ''}
+            </div>
+            <div class="canvas-body">
+              <textarea id="${row.id}" oninput="S.answers['${row.id}']=this.value">${a(row.id)}</textarea>
+            </div>
+          </div>`;
+        });
+      }
+    }
+
+    // Full diagnosis
+    if (S.diagnosis) {
+      const d = S.diagnosis;
+      html += `<div class="strength-card">
+        <div class="strength-top">
+          <div class="strength-top-title">Positioning strength</div>
+          <div class="strength-top-sub">Scored across three dimensions — based on your answers and the mirror</div>
+        </div>
+        <div class="strength-body">
+          ${d.dims.map(dim => {
+            const [lbl, cls] = scoreLabel(dim.score);
+            return `<div class="strength-row">
+              <div class="strength-dim">${dim.label}</div>
+              <div class="bar-bg"><div class="bar-fill" style="width:${dim.score}%"></div></div>
+              <div class="bar-label ${cls}">${lbl}</div>
+            </div>
+            ${dim.insight ? `<div class="dim-insight">${dim.insight}</div>` : ''}`;
+          }).join('')}
+        </div>
+      </div>`;
+      if (d.diagnosis) html += `<div class="diag-section" style="margin-top:16px;"><div class="diag-top"><div class="diag-label">Diagnosis</div></div><div class="diag-body">${fmt(d.diagnosis)}</div></div>`;
+      if (d.working) html += `<div class="diag-section"><div class="diag-top"><div class="diag-label">What is working</div></div><div class="diag-body">${fmt(d.working)}</div></div>`;
+      if (d.actions) html += `<div class="diag-section"><div class="diag-top"><div class="diag-label">Recommended actions</div></div><div class="diag-body">${fmt(d.actions)}</div></div>`;
+      if (d.positioning) html += `<div class="diag-section"><div class="diag-top"><div class="diag-label">Your positioning starting point</div></div><div class="positioning-statement">${fmt(d.positioning)}</div></div>`;
+      html += `<div class="outreach-note"><p>If what you found here confirms something you already suspected — or surfaces something unexpected — I am happy to talk it through. Positioning decisions have long tails.<br><br>Write to me at <a href="mailto:shankar@growthstratex.com">shankar@growthstratex.com</a></p></div>`;
+      html += `<div class="ai-tools-note"><p>There are several AI-powered tools that can help you research competitors, analyse messaging, and refine your positioning language. This diagnostic is designed to be done first — so you bring clarity to those tools rather than noise. Clarity before automation.</p></div>`;
+      html += `<div class="email-row"><button class="btn btn-navy" onclick="emailReport()">Email this report to myself</button></div>`;
+    } else if (S.loading) {
+      html += `<div class="feedback-box" style="margin-top:28px;"><div class="feedback-top"><div class="feedback-label">Generating your diagnosis</div></div><div class="feedback-body">Reading all your answers, the mirror, and preparing a full positioning diagnosis...</div></div>`;
+    }
   }
 
   if (S.error) html += `<div class="error-msg">${S.error}</div>`;
 
   const isLast = S.phase === 2;
-  const canGetDiagnosis = !S.loading && isLast && !S.diagnosis && !S.pathwayLoading;
+  const canGetDiagnosis = !S.loading && isLast && S.mirror && !S.diagnosis && !S.pathwayLoading;
 
   html += `<div class="nav-row">
     <div>${S.phase > 0 ? `<button class="btn btn-outline" onclick="goPhase(${S.phase-1})">Back</button>` : `<button class="btn btn-outline" onclick="S.screen='welcome';render()">Home</button>`}</div>
     <div class="nav-right">
-      ${canGetDiagnosis ? `<button class="btn btn-gold" onclick="handleFinalDiagnosis()">Get my diagnosis</button>` : ''}
+      ${canGetDiagnosis ? `<button class="btn btn-gold" onclick="handleFinalDiagnosis()">Get my full diagnosis</button>` : ''}
       ${!isLast ? `<button class="btn btn-navy" onclick="goPhase(${S.phase+1})">Continue</button>` : ''}
     </div>
   </div>`;
